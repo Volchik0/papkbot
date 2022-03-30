@@ -16,12 +16,12 @@ def main():
 
     dispatcher = updater.dispatcher
 
-    keybord_handler = MessageHandler(Filters.text('клавиатура'), keybord)
+    keyboard_handler = MessageHandler(Filters.text('клавиатура'), keyboard)
     exo_handler = MessageHandler(Filters.all, exo)
     hallo_handler = MessageHandler(Filters.text('Привет, привет'), say_hallo)
 
     dispatcher.add_handler(hallo_handler)
-    dispatcher.add_handler(keybord_handler)
+    dispatcher.add_handler(keyboard_handler)
     dispatcher.add_handler(exo_handler)
 
     updater.start_polling()
@@ -43,7 +43,7 @@ def exo(update: Update, context: CallbackContext):
                               f'Ты написал какой-то ****: {text}\n')
 
 
-def keybord(update: Update, context: CallbackContext):
+def keyboard(update: Update, context: CallbackContext):
     buttons = [
         ['1', '2', '3'],
         ['привет', 'да', 'пока']
@@ -70,14 +70,14 @@ def meet(update: Update, context: CallbackContext):
     """
     user_id = update.message.from_user.id
     if in_database(user_id):
-        pass  # выход из диадого
+        pass  # выход из диалога
     ask_name(update, context)
 
 
 def ask_name(update, Update, context: CallbackContext):
     """
-    спашивает у пользователя имя
-    TODO проверить имя пользователя в телеграме
+    спрашивает у пользователя имя
+    TODO проверить имя пользователя в телеграмме
     """
     update.message.reply_text(
         'ты не в базе данных\n'
@@ -87,7 +87,7 @@ def ask_name(update, Update, context: CallbackContext):
 
 def ask_sex(update, Update, context: CallbackContext):
     """
-    спашивает у пользователя пол
+     спрашивает у пользователя пол
     """
     name = update.message.text
     context.user_data['name'] = name
@@ -98,7 +98,7 @@ def ask_sex(update, Update, context: CallbackContext):
         buttons,
         resize_keyboard=True
     )
-    reply_text = f'приятно познакомится, {name}\n' + 'терепь введи свой пол'
+    reply_text = f'приятно познакомится, {name}\n' + 'теперь введи свой пол'
     update.message.reply_text(
         reply_text,
         reply_markup=keys
@@ -106,7 +106,7 @@ def ask_sex(update, Update, context: CallbackContext):
 
     def ask_grade(update, Update, context: CallbackContext):
         """
-        спашивает у пользователя класс в котором он учится
+        спрашивает у пользователя класс в котором он учится
         """
         sex = update.message.text
         context.user_data['name'] = sex
@@ -123,6 +123,24 @@ def ask_sex(update, Update, context: CallbackContext):
             reply_text,
             reply_markup=keys
         )
+def greet(update, Update, context: CallbackContext):
+    """
+
+
+    """
+    user_id = update.message.from_user.id
+    name = context.user_data['name']
+    sex = context.user_data['data']
+    grate = update.message.text
+
+    # TODO нужна функция записи всего
+    update.message.reply_text(  # ответ на этапе отладки
+       f'Новая запись в БД\n'
+       f'{user_id}\n'
+       f'{name}\n'
+       f'{sex}\n'
+       f'{grate}\n'
+     )
 
 
 if __name__ == '__main__':
