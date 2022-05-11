@@ -60,19 +60,13 @@ def do_echo(update: Update, context: CallbackContext) -> None:
     if sticker:
         sticker_id = sticker.file_id
         update.message.reply_sticker(sticker_id)
-    update.message.reply_text(text=
-                              f' держи своё {text}\n'
-                              f'а это твой имя {id}\n'
-                              f'и вообще ты @{user}\n'
-
-                              )
 
 
 def say_hello(update: Update, context: CallbackContext):
     name = update.message.from_user.first_name
     update.message.reply_text(text=f'Привет, {name} \n'
                                    f' приятно познакомиться с живым человеком\n'
-                                   f'Я - бот'
+                                   f'Я - Volch'
                               )
 
 
@@ -156,8 +150,8 @@ def ask_name(update: Update, context: CallbackContext):
     TODO проверить имя пользователя в телеграме
     '''
     update.message.reply_text(
-        'Привет, меня зовут Бот\n'
-        'А тебя?'
+        'Привет, меня зовут Volch\n'
+        'А как тебя зовут?'
     )
     return WAIT_NAME
 
@@ -183,7 +177,7 @@ def ask_sex(update: Update, context: CallbackContext):
         resize_keyboard=True  # размер
     )
     update.message.reply_text(
-        text=f'Приятно познакомиться, {name}, укажи пожалуйста свой пол',
+        text=f'Приятно познакомиться, {name}, укажи пожалуйста свой пол в появившейся клавиатуре',
         reply_markup=keys  # разметка
     )
     return WAIT_SEX
